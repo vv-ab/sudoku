@@ -1,14 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_ROWS 10
-#define MAX_COLS 10
+#define MAX_ROWS 9
+#define MAX_COLS 9
 
 int board[MAX_ROWS][MAX_COLS];
 
 void FormBoard();
 int GetCoordinates(char *coordinatesInput, int *rowCount, int *colCount);
 int OverwritingFieldNumber(int, int, int);
+
+void GeneratingSudoku();
+int CheckRow(int fieldValue, int);
+int CheckColumn(int fieldValue, int);
+int CheckBox(int fieldValue, int, int);
 
 
 int main() {
@@ -29,7 +34,7 @@ int main() {
     FormBoard();
 
     //Asking player which field to use with coordinates ix9
-    printf("Enter coordinates:\n");
+    /* printf("Enter coordinates:\n");
     char coordinatesInput[3];
     scanf("%s", coordinatesInput);
     int rowCount, colCount;
@@ -47,16 +52,18 @@ int main() {
     OverwritingFieldNumber(initialNumber, rowCount, colCount);
 
     FormBoard();
-
+*/
+    GeneratingSudoku();
     //letting Player overwrite number of the field of previously chosen coordinates
     //Generate random sudoku
 
+    FormBoard();
     return 0;
 }
 
 void FormBoard() {
 
-    board[3][6] = 7;
+    // board[3][6] = 7;
 
     int row, col;
     for (row = 0; row < MAX_ROWS; row++) {
@@ -89,38 +96,65 @@ void GeneratingSudoku() {
     for (int i = 0; i < MAX_ROWS; i++) {
         for (int j = 0; j < MAX_COLS; ++j) {
             //...um zu überprüfen, ob die Zahlen noch den Sudokuregeln entsprechen
-            for (int value = 1; value <= 9; value++) {
+            for (int fieldValue = 1; fieldValue <= 9; fieldValue++) {
                 //wenn ja, wird das Sudoku generiert/beschrieben
 
-               // int myValue = rand()%9 + 1;
-                if (!CheckRow(myValue, i)) return 0;
-                if (!CheckColumn(myValue, j)) return 0;
-                if (!CheckBox(myValue, i, j)) return 0;
+                // int fieldValue = rand()%9 + 1;
+                if (!CheckRow(fieldValue, i)) continue;
+                if (!CheckColumn(fieldValue, j)) continue;
+                if (CheckBox(fieldValue, i, j));
 
-                board[i][j] = myValue
+                {board[i][j] = fieldValue;
+                break;}
+            }
 
+            if (board[i][j] == 0) {
+                //backtracking to find fitting number
+                printf("stop\n");
+
+                board[i][j-1] = 0;
             }
 
         }
     }
 }
 
-int CheckRow(int myValue, int row) {
+int CheckRow(int i_fieldValue, int i_row) {
 
     for (int i = 0; i < MAX_COLS; i++) {
-        if (myValue == board[row][i]) {
+        if (i_fieldValue == board[i_row][i]) {
             return 0;
         }
-        else {
-            return 1;
+    }
+    return 1;
+}
+
+int CheckColumn(int i_fieldValue, int i_col) {
+
+    for (int i = 0; i < MAX_ROWS; i++) {
+        if (i_fieldValue == board[i_col][i]) {
+            return 0;
         }
     }
+    return 1;
 }
 
-void CheckColumn() {
+int CheckBox(int i_fieldValue, int i_row, int i_col) {
 
-}
 
-void checkBox() {
+    if (i_row <= 2) {
+        //row of boxes 1
+        if (i_col <= 2) {
+            //box 1
+        }
+        if 
+    }
 
+    for (int i = 0; i < 3; i++) {
+        if (i_fieldValue == board[i][]) {
+            return 0;
+        }
+
+    }
+    return 1;
 }
